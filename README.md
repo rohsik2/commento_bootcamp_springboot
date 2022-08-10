@@ -1,48 +1,68 @@
 # comento_bootcamp
 
+실제 spring boot 를 통한 구현은 아래 링크에서 이루어지고 있습니다.
+https://github.com/rohsik2/commento_bootcamp_springboot
+
+
 ## Week3 - Spring boot 설정 + SQL 작성하기
 spring boot 설정은 몇번 경험이 있어 빠르게 마칠수 있었습니다.
-![3주차 성공화면1](./images/week3_webpage.jpg)
-![3주차 성공화면2](./images/week3_webpage2.jpg)
+
+### 질문사항들
+1. DB는 대소문자 구분이 없는걸로 아는데 camelCase를 snake_case 대신사용한 이유? 
+ex) requestInfo.userId vs request_info.user_id
+
+2. 바로 date형태로 저장하면 안되나? 
+ex) 2018-02-01-12-35 와 같은 형식이나 , timestamp 대신에 1802011235와 같이 쓰는이유?
+
+3. pk를 사용하지 않고 varchar를 통해서 연결해둔이유?
+
+
+
+
 
 ```SQL
 -- 1. 월별 접속자 수
 SELECT COUNT(userID)
 FROM requestInfo
-WHERE createDate BETWEEN '2008010000' AND '2008312359';
+WHERE createDate BETWEEN '2008010000' AND '2008312359'; -- 그냥 단순 비트윈에는 date 변환을 진행하지 않았음.
+
 
 -- 2) 일자별 접속자 수
 SELECT COUNT(userID)
 FROM requestInfo
-WHERE createDate BETWEEN '2008010000' AND '2008012359';
+WHERE createDate BETWEEN '2008010000' AND '2008012359'; -- 그냥 단순 비트윈에는 date 변환을 진행하지 않았음.
 
 -- 3) 평균 하루 로그인 수 (월간)
-SELECT AVG(a.counter) FROM
+SELECT AVG(a.counter) FROM -- 카운터의 평균을 내서 구함.
 (
-	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter 
+	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter -- ymd라는 변수에 date형태의 연월일을 뽑음, 개수를 세어서 리턴
 	FROM statistc.requestInfo
-	WHERE YEAR(str_to_date(createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i'))
-		and MONTH(str_to_date(createDate,'%y%m%d%H%i')) = MONTH(str_to_date('2008010000','%y%m%d%H%i'))
+	WHERE YEAR(str_to_date(createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i')) -- 연도를 비교하기 위해 date변환 이후 year함수 사
+		and MONTH(str_to_date(createDate,'%y%m%d%H%i')) = MONTH(str_to_date('2008010000','%y%m%d%H%i')) --월을 비교하기 위해 ~
 	GROUP BY ymd) a;
 
 -- 4) 휴일을 제외한 로그인 수(일간) ( 해당 문제에서는 휴일을 포함합니다.)
 SELECT AVG(a.counter) FROM
 (
-	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter 
+	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter -- 일간데이터는 DATE끼리 비교로 가능.
 	FROM requestInfo 
 	WHERE DATE(str_to_date(createDate,'%y%m%d%H%i')) = DATE(str_to_date('2008010000','%y%m%d%H%i'))
 	GROUP BY ymd) a;
 
 -- 5) 부서별 월별 로그인 수
-
-SELECT user.HR_ORGAN, COUNT(*)
-FROM requestInfo Inner Join user
-ON requestInfo.userID = user.userID
-WHERE user.HR_ORGAN LIKE "Front" 
-		and YEAR(str_to_date(requestInfo.createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i'))
+SELECT user.HR_ORGAN, COUNT(*) -- 부서이름과 부서별 갯수를 리턴 
+FROM requestInfo Inner Join user -- 이너조인으로 연결 
+ON requestInfo.userID = user.userID -- 리퀘인포테이블의 유저와 유저테이블의 유저를  조인한다. 
+WHERE YEAR(str_to_date(requestInfo.createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i')) 
 		and MONTH(str_to_date(requestInfo.createDate,'%y%m%d%H%i')) = MONTH(str_to_date('2008010000','%y%m%d%H%i'))
-GROUP BY user.HR_ORGAN
+GROUP BY user.HR_ORGAN -- 그룹은 부서명으로 
 ```
+
+설정완료화면
+
+![3주차 성공화면1](./images/week3_webpage.jpg)
+![3주차 성공화면2](./images/week3_webpage2.jpg)
+
 
 
 ## Week2 - api Docs 작성하기
