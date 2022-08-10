@@ -9,9 +9,11 @@ spring boot 설정은 몇번 경험이 있어 빠르게 마칠수 있었습니�
 
 ### 질문사항들
 1. DB는 대소문자 구분이 없는걸로 아는데 camelCase를 snake_case 대신사용한 이유? 
+
 ex) requestInfo.userId vs request_info.user_id
 
 2. 바로 date형태로 저장하면 안되나? 
+
 ex) 2018-02-01-12-35 와 같은 형식이나 , timestamp 대신에 1802011235와 같이 쓰는이유?
 
 3. pk를 사용하지 않고 varchar를 통해서 연결해둔이유?
@@ -35,10 +37,13 @@ WHERE createDate BETWEEN '2008010000' AND '2008012359'; -- 그냥 단순 비트�
 -- 3) 평균 하루 로그인 수 (월간)
 SELECT AVG(a.counter) FROM -- 카운터의 평균을 내서 구함.
 (
-	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter -- ymd라는 변수에 date형태의 연월일을 뽑음, 개수를 세어서 리턴
+	-- ymd라는 변수에 date형태의 연월일을 뽑음, 개수를 세어서 리턴
+	SELECT DATE(str_to_date(createDate,'%y%m%d%H%i')) ymd, COUNT(*) as counter 
 	FROM statistc.requestInfo
-	WHERE YEAR(str_to_date(createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i')) -- 연도를 비교하기 위해 date변환 이후 year함수 사
-		and MONTH(str_to_date(createDate,'%y%m%d%H%i')) = MONTH(str_to_date('2008010000','%y%m%d%H%i')) --월을 비교하기 위해 ~
+	-- 연도를 비교하기 위해 date변환 이후 year함수 사용 
+	WHERE YEAR(str_to_date(createDate,'%y%m%d%H%i')) = YEAR(str_to_date('2008010000','%y%m%d%H%i')) 
+		 --월을 비교하기 위해 ~
+		and MONTH(str_to_date(createDate,'%y%m%d%H%i')) = MONTH(str_to_date('2008010000','%y%m%d%H%i'))
 	GROUP BY ymd) a;
 
 -- 4) 휴일을 제외한 로그인 수(일간) ( 해당 문제에서는 휴일을 포함합니다.)
