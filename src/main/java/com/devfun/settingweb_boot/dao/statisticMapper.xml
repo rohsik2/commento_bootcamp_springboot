@@ -34,7 +34,7 @@
         from requestinfo ri
         join user
         on ri.userID = user.userID
-        where left(ri.createDate, 6) =   #{yearMonthDate} 
+        where left(ri.createDate, 6) =   #{yearMonthDay} 
         		and ri.requestCode   =   #{type} 
         		and user.HR_ORGAN   like #{department};
     

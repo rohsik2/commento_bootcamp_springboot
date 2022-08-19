@@ -8,7 +8,8 @@ https://github.com/rohsik2/commento_bootcamp_springboot
 
 이후 api docs를 수정해서 연월일을 yyyymmdd에서 yymmdd로 바꾸었고 데이터 베이스와 바로 비교가 가능하도록 만들었습니다.
 
-
+각각의 쿼리가 굉장히 유사항 형태를 띄기에 원래 요구하는 타입 , 연월일, 등등을 가지고 함수를 9개 작성하려 했으나 그럴필요가 없게 sql을 새롭게 설계하였습니다.
+ 
 
 
 

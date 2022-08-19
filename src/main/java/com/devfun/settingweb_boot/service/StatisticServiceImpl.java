@@ -1,6 +1,12 @@
 package com.devfun.settingweb_boot.service;
  
  
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +20,34 @@ public class StatisticServiceImpl implements StatisticService {
     @Autowired
     private StatisticMapper uMapper;
     
+    private String serviceKey = "UGqtfqkb8SGP3PGrQ%2BZeIt78Q6uqVpJ1fhgWSV7SXaqkPxcVH6gdaER3AD242PsNR7ttRmbbRR4D6jQyYDYjcQ%3D%3D";
+    public int getHolidays(String yearMonth) throws IOException {
+
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("solYear","UTF-8") + "=" + URLEncoder.encode("20"+yearMonth.substring(0,2), "UTF-8")); /*연*/
+        urlBuilder.append("&" + URLEncoder.encode("solMonth","UTF-8") + "=" + URLEncoder.encode(yearMonth.substring(2), "UTF-8")); /*월*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+        return 10;
+    }
     
     @Override
     public HashMap<String, Object> yearLoginNum (String year, String department) {
