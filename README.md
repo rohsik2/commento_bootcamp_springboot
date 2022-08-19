@@ -1,7 +1,8 @@
 # comento_bootcamp
 
-실제 spring boot 를 통한 구현은 아래 링크에서 이루어지고 있습니다.
-https://github.com/rohsik2/commento_bootcamp_springboot
+작성한 api docs는 아래 링크에서 확인하실 수 있습니다.
+
+https://boiling-brick-4a4.notion.site/SW-API-919f87d945f9409cae39aa6e8a6a69fd
 
 ## Week4 - Spring boot로 api 구현하기
 
