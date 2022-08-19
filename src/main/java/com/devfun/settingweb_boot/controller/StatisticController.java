@@ -38,7 +38,6 @@ public class StatisticController{
     		@PathVariable(value = "period")final String period,
     		@PathVariable(value = "yearMonthDate")final String yearMonthDate) throws Exception{ 
 		
-		service.getHolidays(yearMonthDate.substring(0,4));
 		if(period.equals("year")) {
 	        return service.yearLoginNum(yearMonthDate, department);
 		}

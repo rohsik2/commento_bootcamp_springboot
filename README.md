@@ -10,8 +10,14 @@ https://github.com/rohsik2/commento_bootcamp_springboot
 
 각각의 쿼리가 굉장히 유사항 형태를 띄기에 원래 요구하는 타입 , 연월일, 등등을 가지고 함수를 9개 작성하려 했으나 그럴필요가 없게 sql을 새롭게 설계하였습니다.
  
+ 공공 api 에서 이용신청을 해서 해당 월에 공휴일이 몇개가 존재하는지 Xml을 통해 파싱하고, 각 날짜를 Set에 넣었습니다.
+ 
+ xml 형태의 데이터는 처음 다루어보아서, xml parser와 관련된 자바 라이브러리를 찾아서 사용했습니다.
+ 
+ 이후 Date를 사용해서 Sat, Sun을 가진 모든 날짜들은 또 Set에 추가를 해주고, 이후 길이를 리턴했습니다.
+ 
 
-
+![4주차 성공화면1](./images/week4_apiResult.png)
 
 ## Week3 - Spring boot 설정 + SQL 작성하기
 spring boot 설정은 몇번 경험이 있어 빠르게 마칠수 있었습니다.
