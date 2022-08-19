@@ -3,6 +3,14 @@
 실제 spring boot 를 통한 구현은 아래 링크에서 이루어지고 있습니다.
 https://github.com/rohsik2/commento_bootcamp_springboot
 
+## Week4 - Spring boot로 api 구현하기
+첫 2자리만 비교해서 연도를 비교해내는 예제코드를 보고 굳이 date로 변환이후 year함수를 통해 가져왔던 순간들이 안타까워 졌습니다.
+
+이후 api docs를 수정해서 연월일을 yyyymmdd에서 yymmdd로 바꾸었고 데이터 베이스와 바로 비교가 가능하도록 만들었습니다.
+
+
+
+
 
 ## Week3 - Spring boot 설정 + SQL 작성하기
 spring boot 설정은 몇번 경험이 있어 빠르게 마칠수 있었습니다.

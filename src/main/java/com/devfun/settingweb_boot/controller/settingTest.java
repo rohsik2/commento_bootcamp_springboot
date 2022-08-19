@@ -17,12 +17,6 @@ public class settingTest {
 	@Autowired
     private StatisticService service;
     
-    @ResponseBody 
-    @RequestMapping("/sqlyearStatistic")
-    public Map<String, Object> sqltest(String year) throws Exception{ 
-        
-        return service.yearloginNum(year);
-    }
     
     @RequestMapping("/test") 
     public ModelAndView test() throws Exception{ 
